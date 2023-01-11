@@ -1,5 +1,9 @@
 package data;
 
+import java.util.List;
+import manage.BookStoreManage;
+import util.MyTool;
+
 public class Publisher implements Comparable<Object>{
 
     public static String getIDPattern() {
@@ -11,13 +15,13 @@ public class Publisher implements Comparable<Object>{
     }
     private String ID;
     private String name;
-    private int phoneNumber;
+    private String phoneNumber;
 
     private static String IDPattern="P\\d{5}";
     public Publisher() {
     }
 
-    public Publisher(String ID, String name, int phoneNumber) {
+    public Publisher(String ID, String name, String phoneNumber) {
         this.ID = ID;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -26,36 +30,22 @@ public class Publisher implements Comparable<Object>{
 
     public boolean validatePublisherID(String ID){
         if(ID.matches(IDPattern)){
-            return true;
+            if(!isDuplicated(ID)){
+                return true;   
+            }
         }
         return false;  
     }
     
-    public boolean validateName(String name){
-        if(name.length()>=5&&name.length()<=30){
-            return true;
+    public boolean isDuplicated(String ID) {
+        BookStoreManage instance = BookStoreManage.getInstance();
+        List<Publisher> pl = instance.getPublisherList();
+        for(Publisher x : pl){
+            if(x.getID().equalsIgnoreCase(ID)){
+                return true;
+            }
         }
         return false;
-    }
-    
-    public boolean validatePhoneNumber(String phoneNumber){
-        if(phoneNumber.length()>=10&&phoneNumber.length()<=12){
-            return true;
-        }
-        return false;
-    }
-    
-    public Publisher setAttribute(String data) {
-        if (data != null) {
-            String[] attributes = data.split(",");   
-            for(int idx = 0; idx<3; idx++) {
-            setID(attributes[idx++]);
-            setName(attributes[idx++]);
-            setPhoneNumber(Integer.parseInt(attributes[idx++]));
-        }
-        return this;
-        }
-        return null;
     }
 
     public String getID() {
@@ -74,11 +64,11 @@ public class Publisher implements Comparable<Object>{
         this.name = name;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -92,6 +82,17 @@ public class Publisher implements Comparable<Object>{
         return this.getName().compareTo(((Publisher)o).getName());
     }
     
+    public void inputPublisher(){
+        String inputID="";
+        do {            
+            inputID = MyTool.inputString("Enter publisher's id",6,6);
+        } while (!validatePublisherID(inputID));
+        setID(inputID);
+        setName(MyTool.inputString("Enter publisher's name",5,30));
+        setPhoneNumber(MyTool.inputString("Enter phone number",10,12));
+    }
+
+
     
     
 }

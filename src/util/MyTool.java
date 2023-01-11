@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,11 +16,11 @@ import java.util.logging.Logger;
  * @author ADMIN
  */
 public class MyTool {
-
+    public static Scanner sc = new Scanner(System.in);
     private MyTool() {
     }
 
-    public static final boolean isBlank(final String text) {
+    public static final boolean isBlank(String text) {
         return text == null || text.trim().isEmpty();
     }
     
@@ -57,5 +58,31 @@ public class MyTool {
             Logger.getLogger(MyTool.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static String inputString(String message,int min,int max){
+        String inputString;
+        do {
+            System.out.print(message + ": ");
+            inputString = sc.nextLine().trim();
+        } while (isBlank(inputString)||inputString.length()<min||inputString.length()>max);
+        return inputString;
+    }
+    
+//    public static int inputInteger(String message) {
+//        int data =0;
+//        boolean validInt = false;
+//        do {
+//            System.out.println(message + ": ");
+//            try {
+//                data = Integer.parseInt(sc.nextLine());
+//                validInt = true;
+//            } catch (NumberFormatException e) {
+//                System.out.println(e);     
+//            }  
+//        } while (validInt==false);
+//        return data;
+//    }
+    
+    
     
 }

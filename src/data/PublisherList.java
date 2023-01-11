@@ -26,33 +26,18 @@ public class PublisherList extends ArrayList<Publisher>{
         this.filePath = filePath;
     }
     
-//    public void load() {
-//        try {
-//            Scanner sc = new Scanner(new File(this.filePath));
-//            Publisher obj = new Publisher();
-//            String data;
-//            while (sc.hasNextLine()) {
-//                data = sc.nextLine();
-//                if (!MyTool.isBlank(data)) {
-//                    obj.setAttribute(data);
-//                        add(obj);
-//                }
-//            }
-//            return true;
-//        } catch (FileNotFoundException e) {
-//        }
-//        return false;
-//    }
-    
     public void load(){
         List<String> list = MyTool.loadFromFile(filePath);
-        for(String x : list){
+//        for(String x : list){
+      for(int i=0;i<list.size();i++){
+            String x = list.get(i);
             Publisher p = new Publisher();
             String[] arr = x.split(",");
             int index = 0;
             p.setID(arr[0]);
             p.setName(arr[1]);
-            p.setPhoneNumber(Integer.parseInt(arr[2]));           
+            p.setPhoneNumber(arr[2]);  
+            this.add(p);
         }             
     }
 
@@ -84,24 +69,30 @@ public class PublisherList extends ArrayList<Publisher>{
         }
     }
 
-    @Override
-    public boolean remove(Object o) {
-        return super.remove(o);
+    public boolean delete(String ID) {
+        Publisher p = new Publisher();
+        p.setID(ID);
+        if (indexOf(p)>-1){
+            remove(indexOf(p));
+            return true;
+        }
+        System.out.println("Publisher’s Id does not exist");
+        return false;
     }
     
     
     
     public static void main(String[] args) {
-        PublisherList ls = new PublisherList("Publisher.txt");
-        ls.add(new Publisher("P00001", "An", 123));
-        ls.add(new Publisher("P00002", "Cinh", 123));
-        ls.add(new Publisher("P00003", "Dhi", 123));
-        ls.add(new Publisher("P00004", "Bhu", 123));
+        BookStoreManage abc = BookStoreManage.getInstance();
+        PublisherList ls = abc.getPublisherList();
+        ls.add(new Publisher("P00001", "An", "123"));
+        ls.add(new Publisher("P00002", "Cinh", "123"));
+        ls.add(new Publisher("P00003", "Dhi", "123"));
+        ls.add(new Publisher("P00004", "Bhu", "123"));
         ls.save();
-        ls.load();
         ls.print();
         System.out.println("===================================");
-        BookStoreManage abc = new BookStoreManage();
+        
         abc.remove();
         
     }

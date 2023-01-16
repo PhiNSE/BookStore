@@ -5,6 +5,7 @@ import manage.BookStoreManage;
 import util.MyTool;
 
 public class Publisher implements Comparable<Object>{
+    private static String IDPattern="P\\d{5}";
 
     public static String getIDPattern() {
         return IDPattern;
@@ -16,8 +17,7 @@ public class Publisher implements Comparable<Object>{
     private String ID;
     private String name;
     private String phoneNumber;
-
-    private static String IDPattern="P\\d{5}";
+    
     public Publisher() {
     }
 
@@ -26,34 +26,13 @@ public class Publisher implements Comparable<Object>{
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
-
-
-    public boolean validatePublisherID(String ID){
-        if(ID.matches(IDPattern)){
-            if(!isDuplicated(ID)){
-                return true;   
-            }
-        }
-        return false;  
-    }
     
-    public boolean isDuplicated(String ID) {
-        BookStoreManage instance = BookStoreManage.getInstance();
-        List<Publisher> pl = instance.getPublisherList();
-        for(Publisher x : pl){
-            if(x.getID().equalsIgnoreCase(ID)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public String getID() {
         return ID;
     }
 
     public void setID(String ID) {
-        this.ID = ID;
+        this.ID = ID.toUpperCase();
     }
 
     public String getName() {
@@ -71,7 +50,28 @@ public class Publisher implements Comparable<Object>{
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
+    
+    
+    public boolean validatePublisherID(String ID){
+        if(ID.matches(IDPattern)){
+            if(!isDuplicated(ID)){
+                return true;   
+            }
+        }
+        return false;  
+    }
+    
+    public static boolean isDuplicated(String ID) {
+        BookStoreManage instance = BookStoreManage.getInstance();
+        List<Publisher> pl = instance.getPublisherList();
+        for(Publisher x : pl){
+            if(x.getID().equalsIgnoreCase(ID)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     @Override
     public String toString() {
         return ID+","+name+","+phoneNumber;
@@ -85,14 +85,14 @@ public class Publisher implements Comparable<Object>{
     public void inputPublisher(){
         String inputID="";
         do {            
-            inputID = MyTool.inputString("Enter publisher's id",6,6);
+            inputID = MyTool.inputString("Enter publisher's id (pattern: Pxxxxx)",6,6);
         } while (!validatePublisherID(inputID));
         setID(inputID);
         setName(MyTool.inputString("Enter publisher's name",5,30));
         setPhoneNumber(MyTool.inputString("Enter phone number",10,12));
     }
 
-
+    
     
     
 }

@@ -38,6 +38,7 @@ public class MyTool {
             }
             bf.close();
             fr.close();
+            System.out.println("Loaded from file: "+fileName);
         } catch (IOException ex) {
             Logger.getLogger(MyTool.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,21 +69,35 @@ public class MyTool {
         return inputString;
     }
     
-//    public static int inputInteger(String message) {
-//        int data =0;
-//        boolean validInt = false;
-//        do {
-//            System.out.println(message + ": ");
-//            try {
-//                data = Integer.parseInt(sc.nextLine());
-//                validInt = true;
-//            } catch (NumberFormatException e) {
-//                System.out.println(e);     
-//            }  
-//        } while (validInt==false);
-//        return data;
-//    }
+    public static int inputInt(String message) {
+        int input = -1;
+        boolean validInt = false;
+        do {
+            System.out.println(message + ": ");
+            try {
+                input = Integer.parseInt(sc.nextLine());
+                validInt = true;
+            } catch (NumberFormatException e) {
+                System.out.println(e);     
+            }  
+        } while (validInt==false && input<0);
+        return input;
+    }
     
+    public static int inputFloat(String message) {
+        int input = -1;
+        boolean validFloat = false;
+        do {
+            System.out.println(message + ": ");
+            try {
+                input = Integer.parseInt(sc.nextLine());
+                validFloat = true;
+            } catch (NumberFormatException e) {
+                System.out.println(e);     
+            }  
+        } while (validFloat==false && input<0);
+        return input;
+    }
     
     
 }

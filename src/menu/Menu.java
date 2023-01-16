@@ -6,7 +6,7 @@ package menu;
  * @author NGUYENPHI
  */
 import java.util.ArrayList;
-import java.util.Scanner;
+import util.MyTool;
 /**
  *
  * @author ADMIN
@@ -20,12 +20,11 @@ public class Menu extends ArrayList<String> {
     public static int getUserChoice(String[] options) {
         System.out.println();
         System.out.println("====================>> MENU <<====================");
-        for (int i = 0; i < options.length; i++) {
-            System.out.println(i + "-" + options[i]);
+        for (int i = 1; i <= options.length; i++) {
+            System.out.println(i + "-" + options[i-1]);
         }
         System.out.println("==================================================");
-        Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
+        int choice = MyTool.inputInt("     >> Your choice");
         return choice;
     }
 }

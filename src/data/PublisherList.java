@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import manage.BookStoreManage;
@@ -65,7 +66,6 @@ public class PublisherList extends ArrayList<Publisher>{
         Collections.sort(this);
         for(Publisher x: this){
             System.out.println(x.toString());
-            System.out.println("");
         }
     }
 
@@ -74,28 +74,13 @@ public class PublisherList extends ArrayList<Publisher>{
         p.setID(ID);
         if (indexOf(p)>-1){
             remove(indexOf(p));
+            System.out.println("Removed");
             return true;
         }
         System.out.println("Publisher’s Id does not exist");
         return false;
     }
     
-    
-    
-    public static void main(String[] args) {
-        BookStoreManage abc = BookStoreManage.getInstance();
-        PublisherList ls = abc.getPublisherList();
-        ls.add(new Publisher("P00001", "An", "123"));
-        ls.add(new Publisher("P00002", "Cinh", "123"));
-        ls.add(new Publisher("P00003", "Dhi", "123"));
-        ls.add(new Publisher("P00004", "Bhu", "123"));
-        ls.save();
-        ls.print();
-        System.out.println("===================================");
-        
-        abc.remove();
-        
-    }
-
+   
 
 }
